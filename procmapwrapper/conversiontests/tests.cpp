@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 
 #include "catch.hpp"
-#include "integerconversion.h"
+#include "conversion.h"
 
 TEST_CASE( "integeralandfloat_tobytes_viceversa", "conversion" ) {
   SECTION( "int16tobytes" ) {
@@ -29,6 +29,17 @@ TEST_CASE( "integeralandfloat_tobytes_viceversa", "conversion" ) {
     REQUIRE(bytes.at(2) == 40);
     REQUIRE(bytes.at(3) == 65);
   }
+  SECTION( "float32tobytes_union") {
+    union {
+      float flt;
+      unsigned char uc[4];
+    } convertflt;
+    convertflt.flt = 10.5;
+    REQUIRE(convertflt.uc[0] == 0);
+    REQUIRE(convertflt.uc[1] == 0);
+    REQUIRE(convertflt.uc[2] == 40);
+    REQUIRE(convertflt.uc[3] == 65);
+  }
   SECTION( "bytestoint16" ) {
     std::array<unsigned char, sizeof(int16_t)> bytes;
     bytes.at(0) = 232;
@@ -50,5 +61,8 @@ TEST_CASE( "integeralandfloat_tobytes_viceversa", "conversion" ) {
     bytes.at(2) = 40;
     bytes.at(3) = 65;
     REQUIRE(ubtyes_to_integeralorfloat<float>(bytes) == 10.5);
+  }
+  SECTION( "endianess" ){
+    REQUIRE(std::endian::native == std::endian::little);
   }
 }

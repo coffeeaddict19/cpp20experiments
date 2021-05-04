@@ -1,5 +1,5 @@
-#ifndef INTEGERCONVERSION_H
-#define INTEGERCONVERSION_H
+#ifndef CONVERSION_H
+#define CONVERSION_H
 
 #include <vector>
 #include <cstdint>
@@ -15,5 +15,5 @@ T ubtyes_to_integeralorfloat(
   std::array<unsigned char, sizeof(T)> barray
 );
 
-#include "integerconversion.cpp"
+#include "conversion.cpp"
 #endif
